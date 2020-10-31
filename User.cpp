@@ -51,3 +51,14 @@ void User::viewFriendsPosts() {
 		}
 	}
 }
+
+void User::sendMessage(User* recevier, Message* msg) {
+	// Get the msg and put it  throught the users receiveMessage function(?!?!?!)
+}
+
+void User::viewReceivedMessages() {
+	// Iterate over the received messages and print them
+	for (list<Message*>::iterator msg = User::receivedMsgs.begin(); msg != User::receivedMsgs.end(); ++msg) {
+		cout << (*msg)->getText() << endl;
+	}
+}
