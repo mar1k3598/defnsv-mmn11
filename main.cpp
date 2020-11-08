@@ -41,5 +41,5 @@ int main()
 	u3->sendMessage(u5, new Message("All your base are belong to us"));
 	u5->viewReceivedMessages();
 
-	return 0;
+ 	return 0;
 }

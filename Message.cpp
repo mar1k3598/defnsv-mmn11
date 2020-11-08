@@ -1,10 +1,10 @@
 #include "Message.h"
 
-Message::~Message()
-{
+Message::Message(std::string text) : _text(text) {
+	return;
 }
 
-string Message::getText()
+std::string Message::getText()
 {
-	return string(text);
+	return std::string(_text);
 }

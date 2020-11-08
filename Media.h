@@ -1,7 +1,8 @@
 #pragma once
 class Media {
 public:
-	virtual void display();
+	// Define display as pure virtual
+	virtual void display() = 0;
 };
 
 

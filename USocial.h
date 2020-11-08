@@ -1,24 +1,19 @@
-#ifndef USOCIAL_H_
-#define USOCIAL_H_
-
-#ifndef USER_H_
-#define USER_H_
-
-#ifndef USOCIAL_H_
-#endif
 #pragma once
-#include "User.h"
+#ifndef _USOCIAL_H
+#define _USOCIAL_H
 #include <string>
+#include <map>
+#include <stdlib.h>
+#include <time.h>
 
-#endif
-using namespace std;
-
+class User;
 class USocial {
-	User* users;
+	std::map<unsigned long, User*> users;
 public:
-	User* registerUser(string Username, bool bussiness);
-	void removeUser(User user);
+	USocial() {};
+	~USocial();
+	User* registerUser(std::string Username, bool bussiness = false);
+	void removeUser(User* user);
 	User* getUserById(unsigned long id);
 };
-
 #endif

@@ -1,24 +1,26 @@
 #pragma once
 #include "Post.h"
-using namespace std;
 
-Post::Post(string text) {
+Post::Post(std::string _text) {
 	// A text only Post instance
-	Post::text = text;
+	text = _text;
+	media = NULL;
 }
 
-Post::Post(string text, Media* media) {
+Post::Post(std::string _text, Media* _media) {
 	// Constructor with text and media objects
-	Post::text = text;
-	Post::media = media;
+	text = _text;
+	media = _media;
 }
 
-string Post::getText() {
-	// Returns a copy of the text
-	return string(Post::text);
+Post::~Post() {
+	delete media;
+}
+
+std::string Post::getText() {
+	return std::string(text);
 }
 
 Media* Post::getMedia() {
-	// Returns the ptr to the local instance of media
-	return Post::media;
+	return media;
 }

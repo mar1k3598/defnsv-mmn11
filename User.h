@@ -1,34 +1,45 @@
 #pragma once
-#include "Message.h"
-#include "Post.h"
-#include "USocial.h"
-
+#ifndef _USER_H
+#define _USER_H
 #include <list>
 #include <string>
 #include <iostream>
+#include <exception>
 
-using namespace std;
+#include "Message.h"
+#include "Post.h"
 
+class USocial;
 class User {
-	USocial* us;
-	unsigned long id;
-	string name;
-	list<unsigned long> friends;
-	list<Post*> posts;
-	list<Message*> receivedMsgs;
-private:
-	User();
+	friend class USocial;
+protected:
+	class myexception : public std::exception
+	{
+		virtual const char* what() const throw()
+		{
+			return "Error: The user is in your friends list!";
+		}
+	} not_friend_exception;
+	USocial* _us;
+	const unsigned long _id;
+	std::string _name;
+	std::list<unsigned long> _friends;
+	std::list<Post*> _posts;
+	std::list<Message*> _receivedMsgs;
+	User(const std::string username, USocial* social_net, const unsigned long id);
 	~User();
+	bool is_friend(const unsigned int id);
 public:
 	unsigned long getId();
-	string getName();
+	std::string getName();
 	void addFriend(User* user);
 	void removeFriend(User* user);
-	void post(string text);
-	void post(string text, Media* attachment);
-	list<Post*> getPosts();
+	void post(std::string text);
+	void post(std::string text, Media* attachment);
+	std::list<Post*> getPosts();
 	void viewFriendsPosts();
-	void reveiceMessage(Message* msg);
-	void sendMessage(User* recipient, Message* msg);
+	void receiveMessage(Message* msg);
+	virtual void sendMessage(User* recipient, Message* msg);
 	void viewReceivedMessages();
 };
+#endif
