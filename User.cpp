@@ -46,7 +46,7 @@ void User::addFriend(User* new_friend) {
 	const unsigned int friend_id = new_friend->getId();
 
 	if (is_friend(friend_id)) {
-		throw "Error: The user is in your friends list!";
+		throw in_friends_list;
 	}
 	_friends.push_back(friend_id);
 }
@@ -54,8 +54,8 @@ void User::addFriend(User* new_friend) {
 void User::removeFriend(User* user) {
 	const unsigned int del_id = user->getId();
 
-	if (is_friend(del_id)) {
-		throw "Error: The user is in your friends list!";
+	if (!is_friend(del_id)) {
+		throw not_friend_error;
 	}
 	
 	_friends.remove(del_id);
@@ -84,12 +84,12 @@ void User::viewFriendsPosts() {
 		// Get their user object from the USocial instance
 		User* user = _us->getUserById(*id);
 
-		std::cout << (*user).getName() << " posts:" << std::endl;
-		// Get the friends posts
 		std::list<Post*> posts = user->getPosts();
+		std::cout << "\t" << (*user).getName() << " posts:" << std::endl;
+		// Get the friends posts
 		for (std::list<Post*>::iterator post = posts.begin(); post != posts.end(); ++post) {
 			// Iterate and print their posts
-			std::cout << (*post)->getText() << std::endl;
+			std::cout << "\t\t" << (*post)->getText() << std::endl;
 			if ((*post)->getMedia() != NULL)
 				(*post)->getMedia()->display();
 		}
@@ -109,13 +109,17 @@ void User::sendMessage(User* recipient, Message* msg) {
 		recipient->receiveMessage(msg); 
 	}
 	else { 
-		throw not_friend_exception;
+		throw not_friend_error;
 	}
 }
 
 void User::viewReceivedMessages() {
 	// Iterate over the received messages and print them
+	if (_receivedMsgs.empty()) {
+		throw no_messages;
+	}
+	std::cout << "\t" << _name << "'s messages:" << std::endl;
 	for (std::list<Message*>::iterator msg = _receivedMsgs.begin(); msg != _receivedMsgs.end(); ++msg) {
-		std::cout << (*msg)->getText() << std::endl;
+		std::cout << "\t\t" << (*msg)->getText() << std::endl;
 	}
 }

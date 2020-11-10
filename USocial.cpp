@@ -2,15 +2,17 @@
 #include "User.h"
 #include "BusinessUser.h"
 
+typedef uint32_t u32;
+
 User* USocial::registerUser(std::string username, bool bussiness) {
 	User* new_user;
-	unsigned long new_id;
+	uint32_t new_id;
 	bool user_exists = true;
 
-	// Generate new pseudo random ID for the user
+	// Generate new pseudo random unsigned long ID for the user
 	srand(time(NULL));
 	while (user_exists) {
-		new_id = rand() % LONG_MAX + 1;
+		new_id = ((u32)rand() << 17 ^ (u32)rand() << 2 ^ (u32)rand() >> 13) % ULONG_MAX; 
 		if (users.find(new_id) == users.end() || users.empty()) { user_exists = false; }
 	}
 

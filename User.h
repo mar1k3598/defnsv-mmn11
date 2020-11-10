@@ -13,13 +13,38 @@ class USocial;
 class User {
 	friend class USocial;
 protected:
-	class myexception : public std::exception
+	class NotFriendException : public std::exception
 	{
 		virtual const char* what() const throw()
 		{
-			return "Error: The user is in your friends list!";
+			return "[!]Error: The user is not in your friends list!";
 		}
-	} not_friend_exception;
+	} not_friend_error;
+
+	class EmptyMessageBoxException : public std::exception
+	{
+		virtual const char* what() const throw()
+		{
+			return "[!]Error: No messages to display.";
+		}
+	} no_messages;
+
+	class NoPostsException : public std::exception
+	{
+		virtual const char* what() const throw()
+		{
+			return "[!]Error: No posts to display.";
+		}
+	} no_posts;
+
+	class InFriendsListException : public std::exception
+	{
+		virtual const char* what() const throw()
+		{
+			return "[!]Error: The user is in your friends list!";
+		}
+	} in_friends_list;
+
 	USocial* _us;
 	const unsigned long _id;
 	std::string _name;
